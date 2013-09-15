@@ -49,7 +49,9 @@
 }
 
 - (SetCardGame *)game {
-    if (!_game) _game = [[SetCardGame alloc] initWithCardCount:self.cardButtons.count usingDeck:[[SetCardDeck alloc] init]];
+    if (!_game) {
+        _game = [[SetCardGame alloc] initWithCardCount:self.cardButtons.count usingDeck:[[SetCardDeck alloc] init]];
+    }
     return _game;
 }
 - (void) setCardButtons:(NSArray *)cardButtons {
@@ -59,7 +61,6 @@
 - (void) setFlipCount:(int)flipCount {
     _flipCount = flipCount;
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
-    //NSLog(@"Flips updated to %d", self.flipCount);
 }
 - (void) updateUI {
     for (UIButton *button in self.cardButtons) {
@@ -71,21 +72,20 @@
 
         button.selected = card.isFaceUp;
         button.enabled = !card.isUnplayable;
-
-        if (card.isFaceUp)
+        
+        if (card.isFaceUp) {
             button.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.7];
-        else
+        } else {
             button.backgroundColor = [UIColor whiteColor];
-
-        //button.alpha = card.isFaceUp ? 0.25 : 1.0;
-        button.alpha = card.isUnplayable ? 0.0 : button.alpha;
+        }
+        button.alpha = card.isUnplayable ? 0.0 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.playDescription.attributedText = self.game.flipDescription;
 }
 
 - (IBAction)dealButton:(UIButton *)sender {
-    [self.game reset:self.cardButtons.count usingDeck:[[SetCardDeck alloc] init]];
+    self.game = nil;
     self.flipCount = 0;
     [self updateUI];
 }

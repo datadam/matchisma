@@ -45,7 +45,6 @@
         if (![self setCardsFromDeck:cardCount usingDeck:deck]) {
             return nil;
         }
-        //Initialize the score to 0.
         self.score = 0;
     }
     return self;
@@ -53,16 +52,6 @@
 
 -(Card *)cardAtIndex:(NSUInteger)index {
     return (index < self.cards.count) ? self.cards[index] : nil;
-}
-
-- (void)reset:(NSUInteger)cardCount usingDeck:(Deck *)deck {
-    [self setCardsFromDeck:cardCount usingDeck:deck];
-    for (Card *card in self.cards) {
-        card.unplayable = NO;
-        card.faceUp = NO;
-    }
-    // Reset the score
-    self.score = 0;
 }
 
 - (NSMutableArray *)findOtherFaceUpCards {

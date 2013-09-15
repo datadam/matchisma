@@ -16,8 +16,6 @@
                usingDeck:(Deck *)deck;
 -(Card *)cardAtIndex:(NSUInteger)index;
 
-- (void)reset:(NSUInteger)cardCount usingDeck:(Deck *)deck;
-
 @property (nonatomic, readonly) int score;
 @property (nonatomic) NSAttributedString *flipDescription;
 
