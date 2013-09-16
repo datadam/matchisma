@@ -55,7 +55,7 @@
         button.alpha = card.isUnplayable ? 0.25 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.flipDescription.text = self.game.flipDescription;
+    self.flipDescription.attributedText = self.game.flipDescription;
 }
 - (void) setFlipCount:(int)flipCount {
     _flipCount = flipCount;
@@ -73,7 +73,7 @@
 }
 
 - (IBAction)dealButton:(UIButton *)sender {
-    [self.game reset:self.cardButtons.count usingDeck:[[PlayingCardDeck alloc] init]];
+    self.game = nil;
     self.flipCount = 0;
     [self.modeControlEnable setEnabled:YES forSegmentAtIndex:0];
     [self.modeControlEnable setEnabled:YES forSegmentAtIndex:1];

@@ -7,24 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Deck.h"
+#import "CardGame.h"
 
-@interface CardMatchingGame : NSObject
-
-// designated initializer
-- (id)initWithCardCount:(NSUInteger) cardCount
-              usingDeck:(Deck *)deck;
-
-- (Card *)cardAtIndex:(NSUInteger)index;
-
-- (void)reset:(NSUInteger)cardCount
-    usingDeck:(Deck *)deck;
-
-@property (nonatomic, readonly) int score;
-@property (nonatomic) NSString *flipDescription;
-
-// Class specific implementation
-- (void)flipCardAtIndex:(NSUInteger)index;
+@interface CardMatchingGame : CardGame
 
 #define TWO_CARD_MODE (0)
 #define THREE_CARD_MODE (1)

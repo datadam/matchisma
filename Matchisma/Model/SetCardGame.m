@@ -9,60 +9,12 @@
 #import "SetCardGame.h"
 
 @interface SetCardGame()
-@property (strong, nonatomic) NSMutableArray *cards; // of Card
-@property (nonatomic, readwrite) int score;
 
-- (BOOL) setCardsFromDeck:(NSUInteger)cardCount usingDeck:(Deck *)deck;
-- (NSMutableArray *)findOtherFaceUpCards;
 
 @end
 
+
 @implementation SetCardGame
-
-- (NSMutableArray *)cards {
-    if (!_cards) _cards = [[NSMutableArray alloc] init];
-    return _cards;
-}
-- (NSAttributedString *)flipDescription {
-    if (!_flipDescription) _flipDescription = [[NSAttributedString alloc] initWithString:@""];
-    return _flipDescription;
-}
-- (BOOL) setCardsFromDeck:(NSUInteger)cardCount usingDeck:(Deck *)deck {
-    for (int i=0; i < cardCount; ++i) {
-        Card *card = [deck drawRandomCard];
-        if (!card) {
-            return NO;
-        } else {
-            self.cards[i] = card;
-        }
-    }
-    return YES;
-}
-- (id)initWithCardCount:(NSUInteger)cardCount usingDeck:(Deck *)deck {
-    self = [super init];
-    
-    if (self) {
-        if (![self setCardsFromDeck:cardCount usingDeck:deck]) {
-            return nil;
-        }
-        self.score = 0;
-    }
-    return self;
-}
-
--(Card *)cardAtIndex:(NSUInteger)index {
-    return (index < self.cards.count) ? self.cards[index] : nil;
-}
-
-- (NSMutableArray *)findOtherFaceUpCards {
-    NSMutableArray *resultarray = [NSMutableArray arrayWithCapacity:2];
-    for (Card *otherCard in self.cards) {
-        if (otherCard.isFaceUp && !otherCard.isUnplayable) {
-            [resultarray addObject:otherCard];
-        }
-    }
-    return resultarray;
-}
 
 #define MISMATCH_PENALTY (1)
 #define MATCH_BONUS (3)

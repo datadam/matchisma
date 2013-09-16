@@ -7,19 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Deck.h"
+#import "CardGame.h"
 
-@interface SetCardGame : NSObject
+@interface SetCardGame : CardGame
 
-// designated initializer
-- (id) initWithCardCount:(NSUInteger) cardCount
-               usingDeck:(Deck *)deck;
--(Card *)cardAtIndex:(NSUInteger)index;
-
-@property (nonatomic, readonly) int score;
-@property (nonatomic) NSAttributedString *flipDescription;
-
-// Class specific implementation
-- (void)flipCardAtIndex:(NSUInteger)index;
 
 @end
