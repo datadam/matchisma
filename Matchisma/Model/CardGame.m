@@ -22,7 +22,9 @@
     if (!_flipDescription) _flipDescription = [[NSAttributedString alloc] initWithString:@""];
     return _flipDescription;
 }
-- (id)initWithCardCount:(NSUInteger)cardCount usingDeck:(Deck *)deck {
+- (id)initWithCardCount:(NSUInteger)cardCount
+              usingDeck:(Deck *)deck
+{
     self = [super init];
     
     if (self) {

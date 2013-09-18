@@ -13,6 +13,7 @@
 @interface MatchingCardGameViewController ()
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeControlEnable;
+@property (nonatomic) NSInteger resetWithMode;
 
 @end
 
@@ -20,7 +21,7 @@
 
 - (CardGame *) createGameWithCardCount:(NSUInteger)cardCount
 {
-    return [[CardMatchingGame alloc] initWithCardCount:cardCount usingDeck:[[PlayingCardDeck alloc] init]];
+    return [[CardMatchingGame alloc] initWithCardCount:cardCount usingDeck:[[PlayingCardDeck alloc] init] usingMode:self.resetWithMode];
 }
 
 - (void) formatButton:(UIButton *)button forCard:(Card *)card {
@@ -49,6 +50,9 @@
     [self.modeControlEnable setEnabled:YES forSegmentAtIndex:0];
     [self.modeControlEnable setEnabled:YES forSegmentAtIndex:1];
     [self.modeControlEnable setSelectedSegmentIndex:[self.game mode]];
+    // Store in the controller the mode of the game before we deal a new deck.
+    // That way, we can restore the game to the same mode.
+    self.resetWithMode = [self.game mode];
 }
 
 - (IBAction)modeControl:(UISegmentedControl *)sender {

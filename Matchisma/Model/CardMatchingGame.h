@@ -14,5 +14,8 @@
 #define TWO_CARD_MODE (0)
 #define THREE_CARD_MODE (1)
 
-
+// designated initializer.  Please set the mode.
+- (id)initWithCardCount:(NSUInteger)cardCount
+              usingDeck:(Deck *)deck
+              usingMode:(NSInteger)mode;
 @end

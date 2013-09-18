@@ -15,11 +15,14 @@
 
 @implementation CardMatchingGame
 
-- (id)initWithCardCount:(NSUInteger)cardCount usingDeck:(Deck *)deck {
+- (id)initWithCardCount:(NSUInteger)cardCount
+              usingDeck:(Deck *)deck
+              usingMode:(NSInteger)mode
+{
     self = [super initWithCardCount:cardCount usingDeck:deck];
     
     if (self) {
-        self.mode = TWO_CARD_MODE;
+        self.mode = mode;
     }
     return self;
 }

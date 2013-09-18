@@ -102,9 +102,11 @@
     //Nothing to do in base class.
 }
 - (IBAction)dealButton:(UIButton *)sender {
+    // Must notify subclass of deal before we reconstruct the game state,
+    // in case we need to save anything.  For example, game mode.
+    [self notifyNewDeal];
     self.game = nil;
     self.flipCount = 0;
-    [self notifyNewDeal];
     [self updateUI];
 }
 
