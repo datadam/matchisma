@@ -13,6 +13,6 @@
 
 #define TWO_CARD_MODE (0)
 #define THREE_CARD_MODE (1)
-@property (nonatomic) NSInteger mode;
+
 
 @end

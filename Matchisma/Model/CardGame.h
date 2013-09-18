@@ -21,6 +21,8 @@
 - (NSMutableArray *)findOtherFaceUpCards;
 
 @property (nonatomic) int score;
+@property (nonatomic) NSInteger mode;
+
 @property (nonatomic) NSAttributedString *flipDescription;
 @property (strong, nonatomic) NSMutableArray *cards; // of Card
 

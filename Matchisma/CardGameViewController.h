@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CardGame.h"
 
 @interface CardGameViewController : UIViewController
+
+@property (strong, nonatomic) CardGame *game;
+
+- (CardGame *) createGameWithCardCount:(NSUInteger)cardCount;
+- (void) formatButton:(UIButton *)button forCard:(Card *)card;
+- (void) notifyCardWasFlipped;
+- (void) notifyNewDeal;
 
 @end
