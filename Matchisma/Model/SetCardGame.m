@@ -24,7 +24,7 @@
     
     if (!card.isUnplayable) {
         if (!card.faceUp) {
-            // We turned up a card.  See if any others are selected
+            // We turned up a new card.  See if any others are selected
             NSArray *otherCards = self.findOtherFaceUpCards;
             
             // Try to find a match only if the user has selected two other cards.
@@ -39,25 +39,14 @@
                     card.unplayable = YES;
                     self.score += (matchScore * MATCH_BONUS);
                     
-                    NSString *labelText = [NSString stringWithFormat:@"%@, %@, %@  form a set!", [[otherCards objectAtIndex:1] contents], [[otherCards objectAtIndex:0] contents], card.contents];
-                    NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithString:labelText];
-                    //Set attributes for each card...
-                    NSRange range1;
-                    NSDictionary *attributes1 = [[[otherCards objectAtIndex:1] attributedContents] attributesAtIndex:0 effectiveRange:&range1];
-                    [labelAttributedText setAttributes:attributes1 range:range1];
-
-                    NSRange range0;
-                    NSDictionary *attributes0 = [[[otherCards objectAtIndex:0] attributedContents] attributesAtIndex:0 effectiveRange:&range0];
-                    range0.location = range1.length + [@", " length];  // adjust the starting point for [0]
-                    [labelAttributedText setAttributes:attributes0 range:range0];
-
-                    NSRange range2;
-                    NSDictionary *attributes2 = [[card attributedContents] attributesAtIndex:0 effectiveRange:&range2];
-                    range2.location = range0.length + range1.length + 2*[@", " length];
-                    [labelAttributedText setAttributes:attributes2 range:range2];
-
+                    NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[[otherCards objectAtIndex:1] attributedContents]];
+                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
+                    [labelAttributedText appendAttributedString:[[otherCards objectAtIndex:0] attributedContents]];
+                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
+                    [labelAttributedText appendAttributedString:[card attributedContents]];
+                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" form a set!"]];
+                    
                     self.flipDescription = labelAttributedText;
-                    //self.flipDescription = [NSString stringWithFormat:@"%@, %@, %@  form a set!", [[otherCards objectAtIndex:0] contents], [[otherCards objectAtIndex:1] contents], card.contents];
                 } else {
                     // not a match.  apply penalty
                     for (Card *otherCard in otherCards) {
@@ -65,70 +54,47 @@
                     }
                     self.score -= MISMATCH_PENALTY;
                     
-                    NSString *labelText = [NSString stringWithFormat:@"%@, %@, %@ do not form a set", [[otherCards objectAtIndex:1] contents], [[otherCards objectAtIndex:0] contents], card.contents];
-                    NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithString:labelText];
-                    
-                    // Set attributes for each card...
-                    NSRange range1;
-                    NSDictionary *attributes1 = [[[otherCards objectAtIndex:1] attributedContents] attributesAtIndex:0 effectiveRange:&range1];
-                    [labelAttributedText setAttributes:attributes1 range:range1];
+                    NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[[otherCards objectAtIndex:1] attributedContents]];
+                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
+                    [labelAttributedText appendAttributedString:[[otherCards objectAtIndex:0] attributedContents]];
+                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
+                    [labelAttributedText appendAttributedString:[card attributedContents]];
+                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" do not form a set!"]];
 
-                    NSRange range0;
-                    NSDictionary *attributes0 = [[[otherCards objectAtIndex:0] attributedContents] attributesAtIndex:0 effectiveRange:&range0];
-                    range0.location = range1.length + [@", " length];  // adjust the starting point for [1]
-                    [labelAttributedText setAttributes:attributes0 range:range0];
-                    
-                    
-                    NSRange range2;
-                    NSDictionary *attributes2 = [[card attributedContents] attributesAtIndex:0 effectiveRange:&range2];
-                    range2.location = range0.length + range1.length + 2*[@", " length];
-                    [labelAttributedText setAttributes:attributes2 range:range2];
-                    
                     self.flipDescription = labelAttributedText;
-                    //self.flipDescription = [NSString stringWithFormat:@"%@, %@, %@ do not form a set", [[otherCards objectAtIndex:0] contents], [[otherCards objectAtIndex:1] contents], card.contents];
                 }
             } else if (otherCards.count == 1) {
                 // Still picking cards
                 card.faceUp = YES;
-                NSString *labelText = [NSString stringWithFormat:@"Selected %@, %@",
-                                       [[otherCards objectAtIndex:0] contents], card.contents];
-                NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithString:labelText];
-                
-                // Set attributes from card.
-                NSRange range0;
-                NSDictionary *attributes0 = [[[otherCards objectAtIndex:0] attributedContents] attributesAtIndex:0 effectiveRange:&range0];
-                range0.location = [@"Selected " length];
-                [labelAttributedText setAttributes:attributes0 range:range0];
-                
-                NSRange cardRange;
-                NSRange searchExtents;
-                searchExtents.location = 0;
-                searchExtents.length = [card.contents length];
-                
-                NSDictionary *cardAttributes = [[card attributedContents] attributesAtIndex:0 longestEffectiveRange:&cardRange inRange:searchExtents];
-                cardRange.location = [@"Selected " length] + range0.length + [@", " length];
-                [labelAttributedText setAttributes:cardAttributes range:cardRange];
+
+                NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[[otherCards objectAtIndex:0] attributedContents]];
+                [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
+                [labelAttributedText appendAttributedString:[card attributedContents]];
+                [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" selected"]];
+
                 self.flipDescription = labelAttributedText;
 
             } else {
                 // Still picking cards
                 card.faceUp = YES;
-                NSString *labelText = [NSString stringWithFormat:@"Selected %@", card.contents];
-                NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithString:labelText];
-                // Set attributes from card.
-                NSRange cardRange;
-                NSRange searchExtents;
-                searchExtents.location = 0;
-                searchExtents.length = [card.contents length];
                 
-                NSDictionary *cardAttributes = [[card attributedContents] attributesAtIndex:0 longestEffectiveRange:&cardRange inRange:searchExtents];
-                cardRange.location = [@"Selected " length];
-                [labelAttributedText setAttributes:cardAttributes range:cardRange];
+                NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[card attributedContents]];
+                [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" selected"]];
                 self.flipDescription = labelAttributedText;
             }
         } else {
             // Card already faceUp.  Flip it back.
             card.faceUp = NO;
+            
+            // See if any others are still selected and update description.
+            NSArray *otherCards = self.findOtherFaceUpCards;
+            if (otherCards.count > 0) {
+                NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[[otherCards objectAtIndex:0] attributedContents]];
+                [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" selected"]];
+                self.flipDescription = labelAttributedText;
+            } else {
+                self.flipDescription = [[NSAttributedString alloc] initWithString:@"Nothing selected"];
+            }
         }
     }
 }
