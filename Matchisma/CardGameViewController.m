@@ -20,6 +20,7 @@
 @property (nonatomic) int flipCount;
 
 - (void) updateUI;
+- (void) setFlipDescription;
 
 @end
 
@@ -76,13 +77,35 @@
     button.enabled = !card.isUnplayable;
     button.alpha = card.isUnplayable ? 0.25 : 1.0;
 }
+- (void) setFlipDescription {
+    NSArray *cards = self.game.activeCards;
+    NSMutableAttributedString *atext = [[NSMutableAttributedString alloc] initWithString:@""];
+    int cardindex = 0;
+    for (Card *card in cards) {
+        [atext appendAttributedString:[card attributedContents]];
+        if (cardindex < cards.count - 1) {
+            // Not yet last card, so add a ', '
+            [atext appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
+        }
+        ++cardindex;
+    }
+    
+    if (cards.count > 0) {
+        [atext appendAttributedString:[[NSAttributedString alloc] initWithString:[self flipSuffix]]];
+    }
+    self.flipDescription.attributedText = atext;
+}
+- (NSString *) flipSuffix {
+    // base class returns an empty string.  No other context available for suffix.
+    return @"";
+}
 - (void) updateUI {
     for (UIButton *button in self.cardButtons) {
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:button]];
         [self formatButton:button forCard:card];
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.flipDescription.attributedText = self.game.flipDescription;
+    [self setFlipDescription];
 }
 
 - (void) notifyCardWasFlipped {

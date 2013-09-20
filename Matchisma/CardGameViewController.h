@@ -17,5 +17,6 @@
 - (void) formatButton:(UIButton *)button forCard:(Card *)card;
 - (void) notifyCardWasFlipped;
 - (void) notifyNewDeal;
+- (NSString *) flipSuffix;
 
 @end

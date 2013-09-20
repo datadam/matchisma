@@ -30,7 +30,8 @@
     [button setTitle:card.contents forState:UIControlStateSelected|UIControlStateHighlighted];
         
     UIImage *cardBackImage = [UIImage imageNamed:@"cardback.png"];
-    UIImage *clear = [UIImage imageNamed:@"singlepix.png"];
+    //UIImage *clear = [UIImage imageNamed:@"singlepix.png"];
+    UIImage *clear = [[UIImage alloc] init];
     [button setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
     [button setImage:clear forState:UIControlStateSelected];
     [button setImage:clear forState:UIControlStateSelected|UIControlStateDisabled];
@@ -41,6 +42,23 @@
     button.enabled = !card.isUnplayable;
     button.alpha = card.isUnplayable ? 0.25 : 1.0;
 }
+
+- (NSString *) flipSuffix {
+    switch ([self.game gameState]) {
+        case kMatch:
+            return @" match!";
+            break;
+        case kNotMatch:
+            return @" do not match.";
+            break;
+        case kInProgress:
+            return @" selected";
+            break;
+        default:  // case kInit:
+            return @"";
+    }
+}
+
 
 - (void) notifyCardWasFlipped {
     [self.modeControlEnable setEnabled:NO forSegmentAtIndex:0];

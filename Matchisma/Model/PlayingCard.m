@@ -15,6 +15,10 @@
     return [rankStrings[self.rank] stringByAppendingString:self.suit];
 }
 
+- (NSAttributedString *)attributedContents {
+    return [[NSAttributedString alloc] initWithString:[self contents]];
+}
+
 - (int)match:(NSArray *)cards {
     int score = 0;
     

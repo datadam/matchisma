@@ -36,65 +36,57 @@
                     for (Card *otherCard in otherCards) {
                         otherCard.unplayable = YES;
                     }
+                    card.faceUp = YES;
                     card.unplayable = YES;
                     self.score += (matchScore * MATCH_BONUS);
+                    self.gameState = kMatch;
                     
-                    NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[[otherCards objectAtIndex:1] attributedContents]];
-                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
-                    [labelAttributedText appendAttributedString:[[otherCards objectAtIndex:0] attributedContents]];
-                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
-                    [labelAttributedText appendAttributedString:[card attributedContents]];
-                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" form a set!"]];
+                    self.activeCards = nil;
+                    [self.activeCards addObjectsFromArray:otherCards];
+                    [self.activeCards addObject:card];
                     
-                    self.flipDescription = labelAttributedText;
                 } else {
                     // not a match.  apply penalty
                     for (Card *otherCard in otherCards) {
                         otherCard.faceUp = NO;
                     }
+                    card.faceUp = NO;
                     self.score -= MISMATCH_PENALTY;
-                    
-                    NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[[otherCards objectAtIndex:1] attributedContents]];
-                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
-                    [labelAttributedText appendAttributedString:[[otherCards objectAtIndex:0] attributedContents]];
-                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
-                    [labelAttributedText appendAttributedString:[card attributedContents]];
-                    [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" do not form a set!"]];
+                    self.gameState = kNotMatch;
 
-                    self.flipDescription = labelAttributedText;
+                    self.activeCards = nil;
+                    [self.activeCards addObjectsFromArray:otherCards];
+                    [self.activeCards addObject:card];
+                    
                 }
             } else if (otherCards.count == 1) {
                 // Still picking cards
                 card.faceUp = YES;
+                self.gameState = kInProgress;
 
-                NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[[otherCards objectAtIndex:0] attributedContents]];
-                [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@", "]];
-                [labelAttributedText appendAttributedString:[card attributedContents]];
-                [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" selected"]];
-
-                self.flipDescription = labelAttributedText;
+                self.activeCards = nil;
+                [self.activeCards addObjectsFromArray:otherCards];
+                [self.activeCards addObject:card];
 
             } else {
                 // Still picking cards
                 card.faceUp = YES;
+                self.gameState = kInProgress;
                 
-                NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[card attributedContents]];
-                [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" selected"]];
-                self.flipDescription = labelAttributedText;
+                self.activeCards = nil;
+                [self.activeCards addObject:card];
+
             }
         } else {
             // Card already faceUp.  Flip it back.
             card.faceUp = NO;
+            self.gameState = kInProgress;
             
             // See if any others are still selected and update description.
             NSArray *otherCards = self.findOtherFaceUpCards;
-            if (otherCards.count > 0) {
-                NSMutableAttributedString *labelAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[[otherCards objectAtIndex:0] attributedContents]];
-                [labelAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" selected"]];
-                self.flipDescription = labelAttributedText;
-            } else {
-                self.flipDescription = [[NSAttributedString alloc] initWithString:@"Nothing selected"];
-            }
+            self.activeCards = nil;
+            [self.activeCards addObjectsFromArray:otherCards];
+
         }
     }
 }

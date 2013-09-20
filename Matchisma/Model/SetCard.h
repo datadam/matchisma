@@ -47,8 +47,6 @@ typedef NS_ENUM(NSUInteger, NumberType) {
               color:(ColorType) color
               text:(NSString *) txt;
 
-- (NSAttributedString *)attributedContents;
-
 + (NSArray *)validNumbers;
 + (NSArray *)validSymbols;
 + (NSArray *)validShading;

@@ -38,4 +38,19 @@
     button.alpha = card.isUnplayable ? 0.0 : 1.0;
 }
 
+- (NSString *) flipSuffix {
+    switch ([self.game gameState]) {
+        case kMatch:
+            return @" form a set!";
+            break;
+        case kNotMatch:
+            return @" do not form a set.";
+            break;
+        case kInProgress:
+            return @" selected";
+            break;
+        default:  // case kInit:
+            return @"";
+    }
+}
 @end

@@ -17,6 +17,11 @@
 @synthesize faceUp = _faceUp;
 @synthesize unplayable = _unplayable;
 
+- (NSAttributedString *)attributedContents {
+    // base card doesn't have a contents string.
+    return nil;
+}
+
 - (int)match:(NSArray *)cards {
     int score = 0;
     

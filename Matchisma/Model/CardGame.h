@@ -23,8 +23,15 @@
 @property (nonatomic) int score;
 @property (nonatomic) NSInteger mode;
 
-@property (nonatomic) NSAttributedString *flipDescription;
+typedef NS_ENUM(NSUInteger, MatchResult) {
+    kInit,
+    kNotMatch,
+    kMatch,
+    kInProgress
+};
+@property (nonatomic) MatchResult gameState;
 @property (strong, nonatomic) NSMutableArray *cards; // of Card
+@property (strong, nonatomic) NSMutableArray *activeCards; // of Card
 
 // Class specific implementation
 - (void)flipCardAtIndex:(NSUInteger)index;

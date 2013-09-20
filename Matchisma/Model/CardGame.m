@@ -18,9 +18,9 @@
     if (!_cards) _cards = [[NSMutableArray alloc] init];
     return _cards;
 }
-- (NSAttributedString *)flipDescription {
-    if (!_flipDescription) _flipDescription = [[NSAttributedString alloc] initWithString:@""];
-    return _flipDescription;
+- (NSMutableArray *)activeCards {
+    if (!_activeCards) _activeCards = [[NSMutableArray alloc] init];
+    return _activeCards;
 }
 - (id)initWithCardCount:(NSUInteger)cardCount
               usingDeck:(Deck *)deck
@@ -32,6 +32,7 @@
             return nil;
         }
         self.score = 0;
+        self.gameState = kInit;
     }
     return self;
 }

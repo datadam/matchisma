@@ -36,9 +36,9 @@
     Card *card = [self cardAtIndex:index];
     
     if (!card.isUnplayable) {
+        NSArray *otherCards = self.findOtherFaceUpCards;
         if (!card.faceUp) {
             // We turned a card up, check if it matches.
-            NSArray *otherCards = self.findOtherFaceUpCards;
             int matchScore = 0;
             
             // Try to find a match only if we have the right number of cards.
@@ -56,29 +56,21 @@
                     otherCard.unplayable = YES;
                 }
                 card.unplayable = YES;
+                
                 int thisScore = matchScore * MATCH_BONUS;
                 self.score += thisScore;
-                
-                if (self.mode == TWO_CARD_MODE) {
-                    NSString *description = [NSString stringWithFormat:@"Matched %@ and %@: %d points",
-                                            card.contents,
-                                            [[otherCards objectAtIndex:0] contents],
-                                            thisScore];
-                    self.flipDescription = [[NSAttributedString alloc] initWithString:description];
-                } else {
-                    NSString *description = [NSString stringWithFormat:@"Matched %@, %@, %@: %d points",
-                                            card.contents,
-                                            [[otherCards objectAtIndex:0] contents],
-                                            [[otherCards objectAtIndex:1] contents],
-                                            thisScore];
-                    self.flipDescription = [[NSAttributedString alloc] initWithString:description];
-                }
+                self.gameState = kMatch;
+
+                self.activeCards = nil;
+                [self.activeCards addObjectsFromArray:otherCards];
+                [self.activeCards addObject:card];
+
             } else {
                 if (((self.mode == TWO_CARD_MODE) && (otherCards.count < 1)) ||
                     ((self.mode == THREE_CARD_MODE) && (otherCards.count < 2)))
                 {
-                    NSString *description = [NSString stringWithFormat:@"Flipped up %@", card.contents];
-                    self.flipDescription = [[NSAttributedString alloc] initWithString:description];
+                    self.gameState = kInProgress;
+                    
                 } else {
                     
                     // not a match. flip over other cards. Apply penalty.
@@ -86,27 +78,23 @@
                         otherCard.faceUp = NO;
                     }
                     self.score -= MISMATCH_PENALTY;
-                    if (self.mode == TWO_CARD_MODE) {
-                        NSString *description = [NSString stringWithFormat:@"Mismatch %@ and %@: -%d points",
-                                                card.contents,
-                                                [[otherCards objectAtIndex:0] contents],
-                                                MISMATCH_PENALTY];
-                        self.flipDescription = [[NSAttributedString alloc] initWithString:description];
-                    } else {
-                        // THREE_CARD_MODE
-                        NSString *description = [NSString stringWithFormat:@"Mismatch %@, %@, %@: -%d points",
-                                                card.contents,
-                                                [[otherCards objectAtIndex:0] contents],
-                                                [[otherCards objectAtIndex:1] contents],
-                                                MISMATCH_PENALTY];
-                        self.flipDescription = [[NSAttributedString alloc] initWithString:description];
-                    }
+                    self.gameState = kNotMatch;
+                    
+                    self.activeCards = nil;
+                    [self.activeCards addObjectsFromArray:otherCards];
+                    [self.activeCards addObject:card];
                 }
             }
-                    } else {
+        } else {
             self.score -= FLIP_COST;
+            self.gameState = kInProgress;
         }
         card.faceUp = !card.faceUp;
+
+        if (self.gameState == kInProgress) {
+            self.activeCards = nil;
+            [self.activeCards addObjectsFromArray:[self findOtherFaceUpCards]];
+        }
     }
 }
 @end
