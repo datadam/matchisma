@@ -41,10 +41,10 @@
 - (NSString *) flipSuffix {
     switch ([self.game gameState]) {
         case kMatch:
-            return @" form a set!";
+            return [[NSString alloc] initWithFormat:@" form a set! %d points", self.game.currentScore];
             break;
         case kNotMatch:
-            return @" do not form a set.";
+            return [[NSString alloc] initWithFormat:@" do not form a set. %d points", self.game.currentScore];
             break;
         case kInProgress:
             return @" selected";

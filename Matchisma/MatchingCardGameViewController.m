@@ -46,10 +46,10 @@
 - (NSString *) flipSuffix {
     switch ([self.game gameState]) {
         case kMatch:
-            return @" match!";
+            return [[NSString alloc] initWithFormat:@" match! %d points", self.game.currentScore];
             break;
         case kNotMatch:
-            return @" do not match.";
+            return [[NSString alloc] initWithFormat:@" do not match. %d points", self.game.currentScore];
             break;
         case kInProgress:
             return @" selected";

@@ -21,6 +21,7 @@
 - (NSMutableArray *)findOtherFaceUpCards;
 
 @property (nonatomic) int score;
+@property (nonatomic) int currentScore;
 @property (nonatomic) NSInteger mode;
 
 typedef NS_ENUM(NSUInteger, MatchResult) {

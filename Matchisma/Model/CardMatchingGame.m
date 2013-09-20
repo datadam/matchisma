@@ -37,6 +37,7 @@
     
     if (!card.isUnplayable) {
         NSArray *otherCards = self.findOtherFaceUpCards;
+        self.currentScore = 0;
         if (!card.faceUp) {
             // We turned a card up, check if it matches.
             int matchScore = 0;
@@ -57,8 +58,8 @@
                 }
                 card.unplayable = YES;
                 
-                int thisScore = matchScore * MATCH_BONUS;
-                self.score += thisScore;
+                self.currentScore = matchScore * MATCH_BONUS;
+                self.score += self.currentScore;
                 self.gameState = kMatch;
 
                 self.activeCards = nil;
@@ -77,6 +78,7 @@
                     for (Card *otherCard in otherCards) {
                         otherCard.faceUp = NO;
                     }
+                    self.currentScore = -MISMATCH_PENALTY;
                     self.score -= MISMATCH_PENALTY;
                     self.gameState = kNotMatch;
                     

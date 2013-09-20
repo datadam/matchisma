@@ -23,6 +23,7 @@
     Card *card = [self cardAtIndex:index];
     
     if (!card.isUnplayable) {
+        self.currentScore = 0;
         if (!card.faceUp) {
             // We turned up a new card.  See if any others are selected
             NSArray *otherCards = self.findOtherFaceUpCards;
@@ -38,7 +39,8 @@
                     }
                     card.faceUp = YES;
                     card.unplayable = YES;
-                    self.score += (matchScore * MATCH_BONUS);
+                    self.currentScore = (matchScore * MATCH_BONUS);
+                    self.score += self.currentScore;
                     self.gameState = kMatch;
                     
                     self.activeCards = nil;
@@ -51,7 +53,8 @@
                         otherCard.faceUp = NO;
                     }
                     card.faceUp = NO;
-                    self.score -= MISMATCH_PENALTY;
+                    self.currentScore = -MISMATCH_PENALTY;
+                    self.score += self.currentScore;
                     self.gameState = kNotMatch;
 
                     self.activeCards = nil;
