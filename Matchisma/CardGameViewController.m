@@ -13,11 +13,8 @@
 @interface CardGameViewController ()
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
-@property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipDescription;
-
-@property (nonatomic) int flipCount;
 
 - (void) updateUI;
 - (void) setFlipDescription;
@@ -67,10 +64,6 @@
     _cardButtons = cardButtons;
     [self updateUI];
 }
-- (void) setFlipCount:(int)flipCount {
-    _flipCount = flipCount;
-    self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
-}
 
 - (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card {
     // Nothing to do in base class.
@@ -115,9 +108,6 @@
 
 - (IBAction)flipCard:(UIButton *)sender {
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
-    if (!sender.isSelected) {
-        self.flipCount++;
-    }
     [self notifyCardWasFlipped];
     [self updateUI];
 }
@@ -130,7 +120,6 @@
     // in case we need to save anything.  For example, game mode.
     [self notifyNewDeal];
     self.game = nil;
-    self.flipCount = 0;
     [self resetButtonFormat];
     [self updateUI];
 }
