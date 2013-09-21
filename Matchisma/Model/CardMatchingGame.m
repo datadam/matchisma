@@ -10,23 +10,10 @@
 
 @interface CardMatchingGame()
 
-
 @end
 
+
 @implementation CardMatchingGame
-
-- (id)initWithCardCount:(NSUInteger)cardCount
-              usingDeck:(Deck *)deck
-              usingMode:(NSInteger)mode
-{
-    self = [super initWithCardCount:cardCount usingDeck:deck];
-    
-    if (self) {
-        self.mode = mode;
-    }
-    return self;
-}
-
 
 #define MATCH_BONUS (4)
 #define MISMATCH_PENALTY (2)
@@ -43,8 +30,7 @@
             int matchScore = 0;
             
             // Try to find a match only if we have the right number of cards.
-            if (((otherCards.count == 1) && (self.mode == TWO_CARD_MODE)) ||
-                ((otherCards.count == 2) && (self.mode == THREE_CARD_MODE)))
+            if (otherCards.count == 1)
             {
                 matchScore = [card match:otherCards];               
             }
@@ -67,8 +53,7 @@
                 [self.activeCards addObject:card];
 
             } else {
-                if (((self.mode == TWO_CARD_MODE) && (otherCards.count < 1)) ||
-                    ((self.mode == THREE_CARD_MODE) && (otherCards.count < 2)))
+                if (otherCards.count < 1)
                 {
                     self.gameState = kInProgress;
                     
