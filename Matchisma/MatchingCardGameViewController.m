@@ -61,10 +61,16 @@
 
 
 - (void) notifyCardWasFlipped {
-    [self.modeControlEnable setEnabled:NO forSegmentAtIndex:0];
-    [self.modeControlEnable setEnabled:NO forSegmentAtIndex:1];
+    // We only need to disable the other option.  Then they can't change modes.
+    // Leaving the active mode enabled makes it stay highlighted.
+    if (self.game.mode == 0) {
+        [self.modeControlEnable setEnabled:NO forSegmentAtIndex:1];
+    } else {
+        [self.modeControlEnable setEnabled:NO forSegmentAtIndex:0];
+    }
 }
 - (void) notifyNewDeal {
+    // Enable all options on a new deal.
     [self.modeControlEnable setEnabled:YES forSegmentAtIndex:0];
     [self.modeControlEnable setEnabled:YES forSegmentAtIndex:1];
     [self.modeControlEnable setSelectedSegmentIndex:[self.game mode]];
