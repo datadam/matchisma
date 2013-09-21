@@ -15,6 +15,8 @@
 
 - (CardGame *) createGameWithCardCount:(NSUInteger)cardCount;
 - (void) formatButton:(UIButton *)button forCard:(Card *)card;
+- (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card;
+
 - (void) notifyCardWasFlipped;
 - (void) notifyNewDeal;
 - (NSString *) flipSuffix;

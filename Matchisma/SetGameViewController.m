@@ -21,12 +21,13 @@
     return [[SetCardGame alloc] initWithCardCount:cardCount usingDeck:[[SetCardDeck alloc] init]];
 }
 
-- (void) formatButton:(UIButton *)button forCard:(Card *)card
-{
+- (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card {
     [button setAttributedTitle:card.attributedContents forState:UIControlStateNormal];
     [button setAttributedTitle:card.attributedContents forState:UIControlStateSelected];
     [button setAttributedTitle:card.attributedContents forState:UIControlStateSelected|UIControlStateHighlighted];
-    
+}
+- (void) formatButton:(UIButton *)button forCard:(Card *)card
+{
     button.selected = card.isFaceUp;
     button.enabled = !card.isUnplayable;
     

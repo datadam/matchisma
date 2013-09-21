@@ -38,10 +38,16 @@
     [self setup];
     return self;
 }
+- (void)resetButtonFormat {
+    for (UIButton *button in self.cardButtons) {
+        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:button]];
+        [self oneTimeFormatButton:button forCard:card];
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [self resetButtonFormat];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -51,7 +57,6 @@
 
 - (CardGame *) createGameWithCardCount:(NSUInteger)cardCount {
     return nil; // base class implementation not meant to be used.
-    //return [[CardGame alloc] initWithCardCount:cardCount usingDeck:[[Deck alloc] init]];
 }
 
 - (CardGame *)game {
@@ -67,15 +72,11 @@
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
 }
 
+- (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card {
+    // Nothing to do in base class.
+}
 - (void) formatButton:(UIButton *)button forCard:(Card *)card {
-    NSLog(@"base class implementation should not be called.");
-    [button setTitle:card.contents forState:UIControlStateSelected];
-    [button setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
-    [button setTitle:card.contents forState:UIControlStateSelected|UIControlStateHighlighted];
-    
-    button.selected = card.isFaceUp;
-    button.enabled = !card.isUnplayable;
-    button.alpha = card.isUnplayable ? 0.25 : 1.0;
+    // Nothing to do in base class.
 }
 - (void) setFlipDescription {
     NSArray *cards = self.game.activeCards;
@@ -130,6 +131,7 @@
     [self notifyNewDeal];
     self.game = nil;
     self.flipCount = 0;
+    [self resetButtonFormat];
     [self updateUI];
 }
 

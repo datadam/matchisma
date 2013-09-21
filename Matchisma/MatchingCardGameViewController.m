@@ -23,12 +23,11 @@
 {
     return [[CardMatchingGame alloc] initWithCardCount:cardCount usingDeck:[[PlayingCardDeck alloc] init] usingMode:self.resetWithMode];
 }
-
-- (void) formatButton:(UIButton *)button forCard:(Card *)card {
+- (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card {
     [button setTitle:card.contents forState:UIControlStateSelected];
     [button setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
     [button setTitle:card.contents forState:UIControlStateSelected|UIControlStateHighlighted];
-        
+    
     UIImage *cardBackImage = [UIImage imageNamed:@"cardback.png"];
     //UIImage *clear = [UIImage imageNamed:@"singlepix.png"];
     UIImage *clear = [[UIImage alloc] init];
@@ -37,7 +36,8 @@
     [button setImage:clear forState:UIControlStateSelected|UIControlStateDisabled];
     [button setImage:clear forState:UIControlStateSelected|UIControlStateHighlighted];
     [button setImage:cardBackImage forState:UIControlStateNormal];
-        
+}
+- (void) formatButton:(UIButton *)button forCard:(Card *)card {
     button.selected = card.isFaceUp;
     button.enabled = !card.isUnplayable;
     button.alpha = card.isUnplayable ? 0.25 : 1.0;
