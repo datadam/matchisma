@@ -130,7 +130,7 @@
 }
 + (NSArray *)validSymbols {
     static NSArray *validSymbols = nil;
-    if (!validSymbols) validSymbols = [NSArray arrayWithObjects:[NSNumber numberWithInt:kTriangle], [NSNumber numberWithInt:kSquare], [NSNumber numberWithInt:kCircle], nil];
+    if (!validSymbols) validSymbols = [NSArray arrayWithObjects:[NSNumber numberWithInt:kDiamond], [NSNumber numberWithInt:kSquiggle], [NSNumber numberWithInt:kOval], nil];
     return validSymbols;
 }
 + (NSArray *)validShading {

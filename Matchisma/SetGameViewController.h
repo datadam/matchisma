@@ -13,6 +13,5 @@
 @interface SetGameViewController : CardGameViewController
 
 - (CardGame *) createGameWithCardCount:(NSUInteger)cardCount;
-- (void) formatButton:(UIButton *)button forCard:(Card *)card;
 
 @end

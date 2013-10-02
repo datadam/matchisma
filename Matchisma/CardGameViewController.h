@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "CardGame.h"
 
-@interface CardGameViewController : UIViewController
+@interface CardGameViewController : UIViewController <UICollectionViewDataSource>
 
+@property (nonatomic) NSUInteger startingCardCount;
 @property (strong, nonatomic) CardGame *game;
 
 - (CardGame *) createGameWithCardCount:(NSUInteger)cardCount;
-- (void) formatButton:(UIButton *)button forCard:(Card *)card;
-- (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card;
 
+- (void) updateUI;
 - (void) notifyCardWasFlipped;
 - (void) notifyNewDeal;
 - (NSString *) flipSuffix;

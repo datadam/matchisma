@@ -12,15 +12,13 @@
 @implementation SetCardDeck
 
 - (NSString *)getStringFromSymbol:(SymbolType) symbol {
-    if (symbol == kTriangle) {
+    if (symbol == kDiamond) {
+        // TODO: Change the string descriptors...
         return @"▲";
-        //return @"△";
-    } else if (symbol == kSquare) {
+    } else if (symbol == kSquiggle) {
         return @"■";
-        //return @"☐";
     } else { // is a circle
         return @"●";
-        //return @"O";
     }
 }
 

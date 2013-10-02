@@ -8,9 +8,12 @@
 
 #import "MatchingCardGameViewController.h"
 #import "PlayingCardDeck.h"
+#import "PlayingCard.h"
+#import "PlayingCardCollectionViewCell.h"
 #import "CardMatchingGame.h"
 
 @interface MatchingCardGameViewController ()
+@property (weak, nonatomic) IBOutlet UICollectionView *matchCardCollectionView;
 
 @end
 
@@ -19,25 +22,6 @@
 - (CardGame *) createGameWithCardCount:(NSUInteger)cardCount
 {
     return [[CardMatchingGame alloc] initWithCardCount:cardCount usingDeck:[[PlayingCardDeck alloc] init]];
-}
-- (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card {
-    [button setTitle:card.contents forState:UIControlStateSelected];
-    [button setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
-    [button setTitle:card.contents forState:UIControlStateSelected|UIControlStateHighlighted];
-    
-    UIImage *cardBackImage = [UIImage imageNamed:@"cardback.png"];
-    //UIImage *clear = [UIImage imageNamed:@"singlepix.png"];
-    UIImage *clear = [[UIImage alloc] init];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-    [button setImage:clear forState:UIControlStateSelected];
-    [button setImage:clear forState:UIControlStateSelected|UIControlStateDisabled];
-    [button setImage:clear forState:UIControlStateSelected|UIControlStateHighlighted];
-    [button setImage:cardBackImage forState:UIControlStateNormal];
-}
-- (void) formatButton:(UIButton *)button forCard:(Card *)card {
-    button.selected = card.isFaceUp;
-    button.enabled = !card.isUnplayable;
-    button.alpha = card.isUnplayable ? 0.25 : 1.0;
 }
 
 - (NSString *) flipSuffix {
@@ -56,10 +40,50 @@
     }
 }
 
+- (NSUInteger) startingCardCount
+{
+    return 20;
+}
 
-- (void) notifyCardWasFlipped {
+- (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card
+{
+    if ([cell isKindOfClass:[PlayingCardCollectionViewCell class]]) {
+        PlayingCardView *playingCardView = ((PlayingCardCollectionViewCell *)cell).playingCardView;
+        PlayingCard *playingCard = (PlayingCard *)card;
+        playingCardView.rank = playingCard.rank;
+        playingCardView.suit = playingCard.suit;
+        playingCardView.faceUp = playingCard.faceUp;
+        playingCardView.alpha = playingCard.isUnplayable ? 0.25 : 1.0;
+    }
 }
-- (void) notifyNewDeal {
+
+- (void) updateUI {
+    for (UICollectionViewCell *cell in [self.matchCardCollectionView visibleCells]) {
+        NSIndexPath *indexPath = [self.matchCardCollectionView indexPathForCell:cell];
+        Card *card = [self.game cardAtIndex:indexPath.item];
+        [self updateCell:cell usingCard:card];
+    }
+    [super updateUI];
 }
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PlayingCard" forIndexPath:indexPath];
+    Card *card = [self.game cardAtIndex:indexPath.item];
+    [self updateCell:cell usingCard:card];
+    return cell;
+}
+
+
+- (IBAction)flipCard:(UITapGestureRecognizer *)gesture
+{
+    CGPoint tapLocation = [gesture locationInView:self.matchCardCollectionView];
+    NSIndexPath *indexPath = [self.matchCardCollectionView indexPathForItemAtPoint:tapLocation];
+    if (indexPath) {
+        [self.game flipCardAtIndex:indexPath.item];
+        [super updateUI];
+    }
+}
+
 
 @end

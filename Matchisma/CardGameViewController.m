@@ -12,7 +12,7 @@
 
 @interface CardGameViewController ()
 
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipDescription;
 
@@ -23,6 +23,21 @@
 
 @implementation CardGameViewController
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.startingCardCount;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Base Class tries to get a generic card.
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Card" forIndexPath:indexPath];
+    NSLog(@"Base class.  Should not be called.");
+    return cell;
+}
 - (void)setup {
     // initialization that can't wait for viewDidLoad
 }
@@ -36,10 +51,6 @@
     return self;
 }
 - (void)resetButtonFormat {
-    for (UIButton *button in self.cardButtons) {
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:button]];
-        [self oneTimeFormatButton:button forCard:card];
-    }
 }
 - (void)viewDidLoad
 {
@@ -57,20 +68,10 @@
 }
 
 - (CardGame *)game {
-    if (!_game) _game = [self createGameWithCardCount:self.cardButtons.count];
+    if (!_game) _game = [self createGameWithCardCount:self.startingCardCount];
     return _game;
 }
-- (void) setCardButtons:(NSArray *)cardButtons {
-    _cardButtons = cardButtons;
-    [self updateUI];
-}
 
-- (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card {
-    // Nothing to do in base class.
-}
-- (void) formatButton:(UIButton *)button forCard:(Card *)card {
-    // Nothing to do in base class.
-}
 - (void) setFlipDescription {
     NSArray *cards = self.game.activeCards;
     NSMutableAttributedString *atext = [[NSMutableAttributedString alloc] initWithString:@""];
@@ -94,10 +95,6 @@
     return @"";
 }
 - (void) updateUI {
-    for (UIButton *button in self.cardButtons) {
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:button]];
-        [self formatButton:button forCard:card];
-    }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     [self setFlipDescription];
 }
@@ -105,13 +102,6 @@
 - (void) notifyCardWasFlipped {
     //Nothing to do in base class.
 }
-
-- (IBAction)flipCard:(UIButton *)sender {
-    [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
-    [self notifyCardWasFlipped];
-    [self updateUI];
-}
-
 - (void) notifyNewDeal {
     //Nothing to do in base class.
 }

@@ -8,9 +8,13 @@
 
 #import "SetGameViewController.h"
 #import "SetCardDeck.h"
+#import "SetCard.h"
+#import "SetCardView.h"
+#import "SetCardCollectionViewCell.h"
 #import "SetCardGame.h"
 
 @interface SetGameViewController ()
+@property (weak, nonatomic) IBOutlet UICollectionView *setCardCollectionView;
 
 @end
 
@@ -21,23 +25,38 @@
     return [[SetCardGame alloc] initWithCardCount:cardCount usingDeck:[[SetCardDeck alloc] init]];
 }
 
-- (void) oneTimeFormatButton:(UIButton *)button forCard:(Card *)card {
-    [button setAttributedTitle:card.attributedContents forState:UIControlStateNormal];
-    [button setAttributedTitle:card.attributedContents forState:UIControlStateSelected];
-    [button setAttributedTitle:card.attributedContents forState:UIControlStateSelected|UIControlStateHighlighted];
-}
-- (void) formatButton:(UIButton *)button forCard:(Card *)card
+- (NSUInteger) startingCardCount
 {
-    button.selected = card.isFaceUp;
-    button.enabled = !card.isUnplayable;
-    
-    if (card.isFaceUp) {
-        button.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.7];
-    } else {
-        button.backgroundColor = [UIColor whiteColor];
-    }
-    button.alpha = card.isUnplayable ? 0.0 : 1.0;
+    return 20;
 }
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetCard" forIndexPath:indexPath];
+    return cell;
+}
+
+- (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card
+{
+    if ([cell isKindOfClass:[SetCardCollectionViewCell class]]) {
+        SetCardView *setCardView = ((SetCardCollectionViewCell *)cell).setCardView;
+        SetCard *setCard = (SetCard *)card;
+        setCardView.shading = setCard.shading;
+        setCardView.color   = setCard.color;
+        setCardView.symbol  = setCard.symbol;
+        setCardView.number  = setCard.number;
+    }
+}
+
+- (void) updateUI {
+    for (UICollectionViewCell *cell in [self.setCardCollectionView visibleCells]) {
+        NSIndexPath *indexPath = [self.setCardCollectionView indexPathForCell:cell];
+        Card *card = [self.game cardAtIndex:indexPath.item];
+        [self updateCell:cell usingCard:card];
+    }
+    [super updateUI];
+}
+
 
 - (NSString *) flipSuffix {
     switch ([self.game gameState]) {
@@ -52,6 +71,16 @@
             break;
         default:  // case kInit:
             return @"";
+    }
+}
+
+- (IBAction)flipCard:(UITapGestureRecognizer *)gesture
+{
+    CGPoint tapLocation = [gesture locationInView:self.setCardCollectionView];
+    NSIndexPath *indexPath = [self.setCardCollectionView indexPathForItemAtPoint:tapLocation];
+    if (indexPath) {
+        [self.game flipCardAtIndex:indexPath.item];
+        [super updateUI];
     }
 }
 @end

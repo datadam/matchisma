@@ -23,9 +23,9 @@ typedef NS_ENUM(NSUInteger, ColorType) {
 };
 
 typedef NS_ENUM(NSUInteger, SymbolType) {
-    kTriangle,
-    kSquare,
-    kCircle
+    kDiamond,
+    kSquiggle,
+    kOval
 };
 
 typedef NS_ENUM(NSUInteger, NumberType) {
