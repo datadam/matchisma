@@ -33,6 +33,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetCard" forIndexPath:indexPath];
+    Card *card = [self.game cardAtIndex:indexPath.item];
+    [self updateCell:cell usingCard:card];
     return cell;
 }
 
@@ -45,6 +47,8 @@
         setCardView.color   = setCard.color;
         setCardView.symbol  = setCard.symbol;
         setCardView.number  = setCard.number;
+        setCardView.faceUp = setCard.isFaceUp;
+        setCardView.alpha = setCard.isUnplayable ? 0.35 : 1.0;
     }
 }
 
@@ -80,7 +84,7 @@
     NSIndexPath *indexPath = [self.setCardCollectionView indexPathForItemAtPoint:tapLocation];
     if (indexPath) {
         [self.game flipCardAtIndex:indexPath.item];
-        [super updateUI];
+        [self updateUI];
     }
 }
 @end

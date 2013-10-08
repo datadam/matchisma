@@ -17,7 +17,7 @@
         return @"▲";
     } else if (symbol == kSquiggle) {
         return @"■";
-    } else { // is a circle
+    } else { // (symbol == kOval)
         return @"●";
     }
 }

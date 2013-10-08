@@ -39,6 +39,16 @@
     return self;
 }
 
+- (void)setSymbol:(SymbolType)symbol {
+    _symbol = symbol;
+    [self setNeedsDisplay];
+}
+
+- (void)setNumber:(NumberType)number {
+    _number = number;
+    [self setNeedsDisplay];
+}
+
 #define OPEN_ALPHA (0.0)
 #define STRIPED_ALPHA (0.3)
 #define SOLID_ALPHA (1.0)
@@ -51,17 +61,22 @@
     } else {
         self.alphaValue = OPEN_ALPHA;
     }
+    [self setNeedsDisplay];
 }
 
 - (void)setColor:(ColorType)color {
     _color = color;
     if (color == kGreen) {
-        self.drawColor = [UIColor greenColor];
+        // self.drawColor = [UIColor greenColor];
+        self.drawColor = [UIColor colorWithRed:0.25 green:0.85 blue:0.25 alpha:1.0];
     } else if (color == kRed) {
-        self.drawColor = [UIColor redColor];
+        // self.drawColor = [UIColor redColor];
+        self.drawColor = [UIColor colorWithRed:1.0 green:0.25 blue:0.25 alpha:1.0];
     } else { // (color == kPurple)
-        self.drawColor = [UIColor purpleColor];
+        // self.drawColor = [UIColor purpleColor];
+        self.drawColor = [UIColor colorWithRed:0.75 green:0.25 blue:1.0 alpha:1.0];
     }
+    [self setNeedsDisplay];
 }
 
 - (void)strokeAndFillWithBezierPath:(UIBezierPath *)path {
@@ -186,7 +201,7 @@
     }
 }
 
-#define CORNER_RADIUS (12.0)
+#define CORNER_RADIUS 12.0
 
 - (void)drawRect:(CGRect)rect
 {
@@ -194,7 +209,13 @@
     
     [roundedRect addClip];
     
-    [[UIColor whiteColor] setFill];
+    // [[UIColor whiteColor] setFill];
+    if (self.faceUp) {
+        [[UIColor lightGrayColor] setFill];
+    } else {
+        [[UIColor whiteColor] setFill];
+    }
+    
     UIRectFill(self.bounds);
     
     [self drawSymbol:self.symbol withNumber:self.number];

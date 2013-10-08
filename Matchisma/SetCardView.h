@@ -16,4 +16,6 @@
 @property (nonatomic) SymbolType symbol;
 @property (nonatomic) NumberType number;
 
+@property (nonatomic) BOOL faceUp;
+
 @end

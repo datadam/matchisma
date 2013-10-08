@@ -81,7 +81,7 @@
     NSIndexPath *indexPath = [self.matchCardCollectionView indexPathForItemAtPoint:tapLocation];
     if (indexPath) {
         [self.game flipCardAtIndex:indexPath.item];
-        [super updateUI];
+        [self updateUI];
     }
 }
 

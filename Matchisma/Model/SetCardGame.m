@@ -36,8 +36,9 @@
                     // There's a match, so take the cards out of play and update score.
                     for (Card *otherCard in otherCards) {
                         otherCard.unplayable = YES;
+                        otherCard.faceUp = NO;
                     }
-                    card.faceUp = YES;
+                    card.faceUp = NO;
                     card.unplayable = YES;
                     self.currentScore = (matchScore * MATCH_BONUS);
                     self.score += self.currentScore;
