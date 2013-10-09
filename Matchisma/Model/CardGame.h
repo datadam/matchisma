@@ -18,6 +18,7 @@
 
 // These should really be protected, but I don't know how to do that.
 - (BOOL) setCardsFromDeck:(NSUInteger)cardCount usingDeck:(Deck *)deck;
+- (BOOL) addCardsFromDeck:(NSUInteger)cardCount;
 - (NSMutableArray *)findOtherFaceUpCards;
 
 @property (nonatomic) int score;
@@ -33,6 +34,7 @@ typedef NS_ENUM(NSUInteger, MatchResult) {
 @property (nonatomic) MatchResult gameState;
 @property (strong, nonatomic) NSMutableArray *cards; // of Card
 @property (strong, nonatomic) NSMutableArray *activeCards; // of Card
+@property (strong, nonatomic) Deck *deck;
 
 // Class specific implementation
 - (void)flipCardAtIndex:(NSUInteger)index;

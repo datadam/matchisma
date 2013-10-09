@@ -31,8 +31,9 @@
         if (![self setCardsFromDeck:cardCount usingDeck:deck]) {
             return nil;
         }
-        self.score = 0;
-        self.gameState = kInit;
+        _score = 0;
+        _gameState = kInit;
+        _deck = deck;
     }
     return self;
 }
@@ -48,6 +49,18 @@
             return NO;
         } else {
             self.cards[i] = card;
+        }
+    }
+    return YES;
+}
+
+- (BOOL) addCardsFromDeck:(NSUInteger)cardCount {
+    for (int i=0; i < cardCount; ++i) {
+        Card *card = [self.deck drawRandomCard];
+        if (!card) {
+            return NO;
+        } else {
+            [self.cards addObject:card];
         }
     }
     return YES;

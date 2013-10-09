@@ -93,6 +93,12 @@
         self.thirdCardView.alpha = 0.0;
     }
 }
+
+- (void) doReload {
+    //Nothing to do in base class;
+    [self.setCardCollectionView reloadData];
+}
+
 - (void) updateUI {
     for (UICollectionViewCell *cell in [self.setCardCollectionView visibleCells]) {
         NSIndexPath *indexPath = [self.setCardCollectionView indexPathForCell:cell];

@@ -17,6 +17,7 @@
 - (CardGame *) createGameWithCardCount:(NSUInteger)cardCount;
 
 - (void) updateUI;
+- (void) doReload;
 - (void) notifyNewDeal;
 - (NSString *) flipSuffix;
 - (NSMutableAttributedString *)activeDescribe;

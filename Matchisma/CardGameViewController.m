@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipDescription;
+@property (nonatomic) BOOL endOfDeck;
 
 - (void) updateUI;
 - (void) setFlipDescription;
@@ -29,7 +30,9 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.startingCardCount;
+    NSInteger numItems = [self.game.cards count];
+    NSLog(@"Number of items in section: %d", numItems);
+    return numItems;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -55,6 +58,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.endOfDeck = NO;
     [self resetButtonFormat];
 }
 - (void)didReceiveMemoryWarning
@@ -93,6 +97,9 @@
     if (cards.count > 0) {
         [atext appendAttributedString:[[NSAttributedString alloc] initWithString:[self flipSuffix]]];
     }
+    if (self.endOfDeck) {
+        [atext appendAttributedString:[[NSAttributedString alloc] initWithString:@" No more cards."]];
+    }
     self.flipDescription.attributedText = atext;
 }
 - (NSString *) flipSuffix {
@@ -113,6 +120,17 @@
     [self notifyNewDeal];
     self.game = nil;
     [self resetButtonFormat];
+    [self updateUI];
+}
+- (void) doReload {
+    //Nothing to do in base class;
+}
+- (IBAction)addCardsButton:(UIButton *)sender {
+    // Add cards to the game.
+    if (![self.game addCardsFromDeck:3]) {
+        self.endOfDeck = YES;
+    }
+    [self doReload];
     [self updateUI];
 }
 
