@@ -42,7 +42,7 @@
 
 - (NSUInteger) startingCardCount
 {
-    return 20;
+    return 22;
 }
 
 - (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card

@@ -61,21 +61,21 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fVM-sr-bGb">
-                                    <size key="itemSize" width="60" height="70"/>
+                                    <size key="itemSize" width="60" height="80"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PlayingCard" id="I7J-Nb-FYi" customClass="PlayingCardCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="70"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="60" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view opaque="NO" contentMode="scaleToFill" id="ilN-S0-ZNF" customClass="PlayingCardView">
-                                                    <rect key="frame" x="5" y="5" width="50" height="68"/>
+                                                    <rect key="frame" x="5" y="5" width="50" height="70"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -120,7 +120,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lWJ-ck-csY">
-                                <rect key="frame" x="124" y="340" width="73" height="34"/>
+                                <rect key="frame" x="140" y="357" width="73" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Deal!">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -131,14 +131,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score: 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wb3-V7-gPd">
-                                <rect key="frame" x="204" y="340" width="105" height="21"/>
+                                <rect key="frame" x="195" y="368" width="105" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dLt-6r-zM3">
-                                <rect key="frame" x="10" y="382" width="299" height="32"/>
+                                <rect key="frame" x="144" y="384" width="156" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -149,21 +149,21 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vSU-UC-dGh">
-                                    <size key="itemSize" width="50" height="70"/>
+                                    <size key="itemSize" width="60" height="80"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetCard" id="Koc-al-rky" customClass="SetCardCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="70"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view opaque="NO" contentMode="scaleToFill" id="21z-H2-8F1" customClass="SetCardView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="70"/>
+                                                    <rect key="frame" x="5" y="5" width="50" height="70"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -180,14 +180,32 @@
                                     <outletCollection property="gestureRecognizers" destination="skz-6h-2SF" appends="YES" id="nyP-Gc-HKJ"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" id="xrA-xF-yfp" customClass="SetCardView">
+                                <rect key="frame" x="55" y="360" width="30" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="AOl-Mr-2MF" customClass="SetCardView">
+                                <rect key="frame" x="20" y="360" width="30" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="8XO-JJ-WkQ" customClass="SetCardView">
+                                <rect key="frame" x="90" y="360" width="30" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Set" id="6jC-I8-ZmD"/>
                     <connections>
+                        <outlet property="firstCardView" destination="AOl-Mr-2MF" id="932-ug-Wvm"/>
                         <outlet property="flipDescription" destination="dLt-6r-zM3" id="j46-I3-UDh"/>
                         <outlet property="scoreLabel" destination="wb3-V7-gPd" id="LHx-ZQ-pfX"/>
+                        <outlet property="secondCardView" destination="xrA-xF-yfp" id="F7c-QN-Snz"/>
                         <outlet property="setCardCollectionView" destination="PUm-dk-hGT" id="GWb-fN-e2w"/>
+                        <outlet property="thirdCardView" destination="8XO-JJ-WkQ" id="BlY-Xf-8nN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OiN-Km-Ehs" userLabel="First Responder" sceneMemberID="firstResponder"/>

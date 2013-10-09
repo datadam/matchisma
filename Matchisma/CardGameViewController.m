@@ -72,7 +72,8 @@
     return _game;
 }
 
-- (void) setFlipDescription {
+- (NSMutableAttributedString *)activeDescribe
+{
     NSArray *cards = self.game.activeCards;
     NSMutableAttributedString *atext = [[NSMutableAttributedString alloc] initWithString:@""];
     int cardindex = 0;
@@ -84,7 +85,11 @@
         }
         ++cardindex;
     }
-    
+    return atext;
+}
+- (void) setFlipDescription {
+    NSMutableAttributedString *atext = [self activeDescribe];
+    NSArray *cards = self.game.activeCards;
     if (cards.count > 0) {
         [atext appendAttributedString:[[NSAttributedString alloc] initWithString:[self flipSuffix]]];
     }
@@ -99,9 +104,6 @@
     [self setFlipDescription];
 }
 
-- (void) notifyCardWasFlipped {
-    //Nothing to do in base class.
-}
 - (void) notifyNewDeal {
     //Nothing to do in base class.
 }
