@@ -19,6 +19,7 @@
 // These should really be protected, but I don't know how to do that.
 - (BOOL) setCardsFromDeck:(NSUInteger)cardCount usingDeck:(Deck *)deck;
 - (BOOL) addCardsFromDeck:(NSUInteger)cardCount;
+- (NSArray *) removeUnplayableCards; // return indexes of cards removed.
 - (NSMutableArray *)findOtherFaceUpCards;
 
 @property (nonatomic) int score;

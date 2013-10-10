@@ -131,12 +131,25 @@
     }
 }
 
+- (void)removeCellsFromCollection:(NSArray *)indexesRemoved
+{
+    NSMutableArray *deleteArray = [[NSMutableArray alloc] init];
+    for (NSNumber *indexRemoved in indexesRemoved) {
+        NSIndexPath *indexPath =[NSIndexPath indexPathForRow:indexRemoved.integerValue inSection:0];
+        [deleteArray addObject:indexPath];
+    }
+    [self.setCardCollectionView deleteItemsAtIndexPaths:deleteArray];
+}
 - (IBAction)flipCard:(UITapGestureRecognizer *)gesture
 {
     CGPoint tapLocation = [gesture locationInView:self.setCardCollectionView];
     NSIndexPath *indexPath = [self.setCardCollectionView indexPathForItemAtPoint:tapLocation];
     if (indexPath) {
         [self.game flipCardAtIndex:indexPath.item];
+        NSArray *indexesRemoved = [self.game removeUnplayableCards];
+        if (indexesRemoved.count > 0) {
+            [self removeCellsFromCollection:indexesRemoved];
+        }
         [self updateUI];
     }
 }

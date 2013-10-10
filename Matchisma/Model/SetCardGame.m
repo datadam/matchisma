@@ -47,7 +47,7 @@
                     self.activeCards = nil;
                     [self.activeCards addObjectsFromArray:otherCards];
                     [self.activeCards addObject:card];
-                    
+                                        
                 } else {
                     // not a match.  apply penalty
                     for (Card *otherCard in otherCards) {
