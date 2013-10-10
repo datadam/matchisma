@@ -18,8 +18,8 @@
 
 - (void) updateUI;
 - (void) doReload;
-- (void) notifyNewDeal;
 - (NSString *) flipSuffix;
 - (NSMutableAttributedString *)activeDescribe;
+- (void)removeCellsFromCollection:(NSArray *)indexesRemoved;
 
 @end

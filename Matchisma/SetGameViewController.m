@@ -95,8 +95,11 @@
 }
 
 - (void) doReload {
-    //Nothing to do in base class;
-    [self.setCardCollectionView reloadData];
+    [self.setCardCollectionView reloadData];    
+    
+    int itemIndex = self.game.cards.count - 1;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
+    [self.setCardCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
 }
 
 - (void) updateUI {

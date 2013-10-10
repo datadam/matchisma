@@ -31,7 +31,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSInteger numItems = [self.game.cards count];
-    NSLog(@"Number of items in section: %d", numItems);
+    //NSLog(@"Number of items in section: %d", numItems);
     return numItems;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -53,13 +53,11 @@
     [self setup];
     return self;
 }
-- (void)resetButtonFormat {
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.endOfDeck = NO;
-    [self resetButtonFormat];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -111,16 +109,29 @@
     [self setFlipDescription];
 }
 
-- (void) notifyNewDeal {
+- (void)removeCellsFromCollection:(NSArray *)indexesRemoved
+{
     //Nothing to do in base class.
 }
+- (void)removeCellsFromCollectionInRange:(int)start ToEnd:(int)end
+{
+    NSMutableArray *indexesToRemove = [[NSMutableArray alloc] init];
+    for (int i=start; i<end; ++i) {
+        [indexesToRemove addObject:[[NSNumber alloc] initWithInt:i]];
+    }
+    [self removeCellsFromCollection:indexesToRemove];
+}
+
 - (IBAction)dealButton:(UIButton *)sender {
-    // Must notify subclass of deal before we reconstruct the game state,
-    // in case we need to save anything.  For example, game mode.
-    [self notifyNewDeal];
+    int previousCardCount = [self.game.cards count];
     self.game = nil;
-    [self resetButtonFormat];
     [self updateUI];
+    
+    int finalCardCount = [self.game.cards count];
+    if (previousCardCount > finalCardCount) {
+        //Remove extraneous cells on a Deal Reset.
+        [self removeCellsFromCollectionInRange:finalCardCount ToEnd:previousCardCount];
+    }
 }
 - (void) doReload {
     //Nothing to do in base class;
