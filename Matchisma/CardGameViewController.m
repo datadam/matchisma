@@ -38,7 +38,7 @@
 {
     // Base Class tries to get a generic card.
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Card" forIndexPath:indexPath];
-    NSLog(@"Base class.  Should not be called.");
+    //NSLog(@"Base class.  Should not be called.");
     return cell;
 }
 - (void)setup {
