@@ -70,6 +70,14 @@
     return atext;
 }
 
+- (void)showAttributesForCard:(SetCard *)card {
+    NSLog(@"Card attributes: %s %s %s %s",
+          (card.number == kOne) ? "one" : (card.number == kTwo) ? "two" : "three",
+          (card.color == kGreen) ? "green" : (card.color == kPurple) ? "purple" : "red",
+          (card.shading == kOpen) ? "open" : (card.shading == kStriped) ? "striped" : "solid",
+          (card.symbol == kSquiggle) ? "squiggle" : (card.symbol == kOval) ? "oval" : "diamond"
+          );
+}
 
 - (int)match:(NSArray *)cards {
     int score = 0;
@@ -77,46 +85,22 @@
     if (cards.count != 2) {
         NSLog(@"Error:  wrong number of cards: %d", cards.count);
     } else {
-        bool numberMatch = NO;
-        bool symbolMatch = NO;
-        bool shadingMatch = NO;
-        bool colorMatch = NO;
-        bool numberSet = NO;
-        bool symbolSet = NO;
-        bool shadingSet = NO;
-        bool colorSet = NO;
-        bool firstCardChecked = NO;
-        for (SetCard *otherCard in cards) {
-            if (!firstCardChecked) {
-                if (self.number == otherCard.number) numberMatch = YES;
-                if (self.symbol == otherCard.symbol) symbolMatch = YES;
-                if (self.shading == otherCard.shading) shadingMatch = YES;
-                if (self.color == otherCard.color) colorMatch = YES;
-                firstCardChecked = YES;
-            } else {
-                if ((numberMatch && (self.number == otherCard.number)) ||
-                    (!numberMatch && (self.number != otherCard.number)))
-                {
-                    numberSet = YES;
-                }
-                if ((symbolMatch && (self.symbol == otherCard.symbol)) ||
-                    (!symbolMatch && (self.symbol != otherCard.symbol)))
-                {
-                    symbolSet = YES;
-                }
-                if ((shadingMatch && (self.shading == otherCard.shading)) ||
-                    (!shadingMatch && (self.shading != otherCard.shading)))
-                {
-                    shadingSet = YES;
-                }
-                if ((colorMatch && (self.color == otherCard.color)) ||
-                    (!colorMatch && (self.color != otherCard.color)))
-                {
-                    colorSet = YES;
-                }
-            }
-        }
-        if (numberSet && symbolSet && shadingSet && colorSet) {
+        SetCard *card0 = cards[0];
+        SetCard *card1 = cards[1];
+        bool numberMatch = (((self.number == card0.number) && (self.number == card1.number)) ||
+                            ((self.number != card0.number) && (self.number != card1.number) && (card0.number != card1.number)));
+        bool symbolMatch = (((self.symbol == card0.symbol) && (self.symbol == card1.symbol)) ||
+                            ((self.symbol != card0.symbol) && (self.symbol != card1.symbol) && (card0.symbol != card1.symbol)));
+        bool shadingMatch = (((self.shading == card0.shading) && (self.shading == card1.shading)) ||
+                            ((self.shading != card0.shading) && (self.shading != card1.shading) && (card0.shading != card1.shading)));
+        bool colorMatch = (((self.color == card0.color) && (self.color == card1.color)) ||
+                            ((self.color != card0.color) && (self.color != card1.color) && (card0.color != card1.color)));
+        
+        if (numberMatch && symbolMatch && shadingMatch && colorMatch) {
+            //NSLog(@"All properties match!");
+            //[self showAttributesForCard:self];
+            //[self showAttributesForCard:cards[0]];
+            //[self showAttributesForCard:cards[1]];
             score = 1;
         }
     }

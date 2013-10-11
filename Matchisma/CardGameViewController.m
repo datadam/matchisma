@@ -105,7 +105,7 @@
     return @"";
 }
 - (void) updateUI {
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d", self.game.score];
     [self setFlipDescription];
 }
 
